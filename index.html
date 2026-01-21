@@ -1,0 +1,629 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Undangan | Heri & Yola</title>
+
+    <!-- Tailwind CDN (boleh tetap dipakai untuk utility kecil) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Fonts: Alice -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Alice&display=swap"
+      rel="stylesheet" />
+
+    <link rel="stylesheet" href="styles.css" />
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+  </head>
+
+  <body class="min-h-screen text-white">
+    <!-- Animated Background -->
+    <div class="bg-animated" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <!-- Music -->
+    <audio id="bgm" preload="auto" loop>
+      <source src="assets/music.mpeg" type="audio/mpeg" />
+    </audio>
+
+    <!-- Music Bubble -->
+    <button
+      id="musicToggle"
+      class="music-bubble"
+      type="button"
+      aria-label="Toggle Musik">
+      <span class="icon-wrap" aria-hidden="true">
+        <i data-lucide="volume-2" class="lucide-icon"></i>
+      </span>
+      <span class="music-text hidden sm:inline">Musik</span>
+    </button>
+
+    <!-- OPENING / COVER -->
+    <section id="opening" class="opening">
+      <div class="opening-stage">
+        <img
+          src="assets/background depan.JPEG"
+          alt="Cover Heri & Yolanda"
+          class="opening-img" />
+        <div class="opening-overlay" aria-hidden="true"></div>
+
+        <div
+          class="opening-flower opening-flower-left"
+          aria-hidden="true"></div>
+        <div
+          class="opening-flower opening-flower-right"
+          aria-hidden="true"></div>
+
+        <div class="opening-text">
+          <p class="cover-smallcaps">DEAR FAMILY AND FRIENDS</p>
+
+          <h1 class="cover-names">
+            <span class="cover-name">Heri</span>
+            <span class="cover-amp">&amp;</span>
+            <span class="cover-name">Yola</span>
+          </h1>
+
+          <p class="cover-sub">INVITE YOU TO CELEBRATE THEIR WEDDING</p>
+          <p class="cover-date">MINGGU 15 FEBRUARI 2026 | 09.00 WIB</p>
+
+          <p class="cover-address">
+            Jl. Sri Menanti, Ds. Tanjung Raja, Kec. Tanjung Raja, Kab. Lampung
+            Utara
+          </p>
+
+          <div class="to-box">
+            <p class="to-label">Kepada Yth.</p>
+            <p id="guestName" class="to-name">Nama Tamu</p>
+          </div>
+
+          <button id="openBtn" class="btn-open" type="button">
+            <i data-lucide="sparkles" class="lucide-icon"></i>
+            <span>Buka Undangan</span>
+          </button>
+
+          <p class="hint">
+            <i data-lucide="info" class="lucide-icon"></i>
+            <span>Ketuk tombol untuk memulai musik</span>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- MAIN CONTENT -->
+    <main id="content" class="content hidden">
+      <div class="mobile-shell">
+        <!-- HERO / MOTION (BG HERO BIARKAN) -->
+        <!-- HERO / MOTION -->
+        <header class="w-full px-0 pt-0">
+          <div class="card heroMotionWrap full-bleed">
+            <section
+              class="heroScene scene"
+              id="heroScene"
+              aria-label="Hero Motion">
+              <div class="bg"></div>
+
+              <div class="layer treeLayer intro sway">
+                <img src="assets/tree_red.png" alt="Pohon Merah" />
+              </div>
+
+              <div class="layer frameLayer intro">
+                <img src="assets/frame.png" alt="Frame" />
+              </div>
+
+              <div class="layer branchLayer intro sway2">
+                <img src="assets/branch_green.png" alt="Daun Atas" />
+              </div>
+
+              <div class="layer brownLayer intro float2">
+                <img src="assets/flowers_brown.png" alt="Flowers Brown" />
+              </div>
+
+              <div class="layer colorfulLayer intro float">
+                <img src="assets/flowers_colorful.png" alt="Flowers Colorful" />
+              </div>
+
+              <div class="layer grassLayer intro sway3">
+                <img src="assets/grass.png" alt="Grass" />
+              </div>
+
+              <div class="accent-maroon" aria-hidden="true"></div>
+
+              <!-- TITLE CENTER -->
+              <div class="titleWrap" aria-hidden="false">
+                <div class="nameFrame introText" id="nameFrame">
+                  <img
+                    class="nameFrameImg"
+                    src="assets/names-frame.png"
+                    alt=""
+                    aria-hidden="true" />
+
+                  <div class="names" aria-label="Nama Mempelai">
+                    <div class="nameTop">Heri</div>
+                    <div class="amp">&amp;</div>
+                    <div class="nameBottom">Yolan</div>
+                  </div>
+                </div>
+              </div>
+              <!-- ✅ TOMBOL DIPINDAH KE BAWAH SCENE -->
+              <a
+                href="#acara"
+                class="heroCta heroCta--primary"
+                id="toAcaraBtn"
+                aria-label="Lihat Detail Acara">
+                <span class="heroCtaIcon" aria-hidden="true">
+                  <i data-lucide="calendar-days" class="lucide-icon"></i>
+                </span>
+                <span class="heroCtaText">Detail Acara</span>
+                <span class="heroCtaArrow" aria-hidden="true">
+                  <i data-lucide="arrow-right" class="lucide-icon"></i>
+                </span>
+              </a>
+            </section>
+          </div>
+        </header>
+      </div>
+
+      <!-- MEMPELAI (FULL BG: background mempelai) -->
+      <section id="mempelai" class="mempelaiSection mempelaiBG">
+        <div class="mempelaiInner container mx-auto px-4">
+          <div class="card reveal d1">
+            <h3 class="section-title">Mempelai</h3>
+
+            <div class="grid md:grid-cols-2 gap-6 mt-5">
+              <div class="panel reveal from-left d2 text-center">
+                <div class="mempelai-photo-large mempelai-frame">
+                  <img src="assets/heri.JPEG" alt="Heri Susanto" />
+                </div>
+                <h4 class="panel-title mt-4">Heri Susanto, S.E.</h4>
+                <p class="isi opacity-90 mt-2">
+                  Putra dari Bapak M. Elyas Budaya &amp; Ibu Nely Hariyani,
+                  S.Pd.I
+                </p>
+              </div>
+
+              <div class="panel reveal from-right d3 text-center">
+                <div class="mempelai-photo-large mempelai-frame">
+                  <img src="assets/yolanda.JPEG" alt="Destria Yolanda" />
+                </div>
+                <h4 class="panel-title mt-4">Destria Yolanda, A.Md.Kep.</h4>
+                <p class="isi opacity-90 mt-2">
+                  Putri dari Bapak Edial Sahara Putra &amp; Ibu Lelyani Dwi
+                  Lestari
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= ACARA / COUNTDOWN (BG HERO BIARKAN, BG ACARA BIARKAN) ================= -->
+      <section id="acara" class="curtain-section" aria-label="Detail Acara">
+        <div class="curtainVeil" aria-hidden="true"></div>
+
+        <div class="curtain-inner">
+          <div class="card reveal">
+            <h3 class="section-title text-center">Hitung Mundur</h3>
+
+            <div class="panel mt-5 reveal d2">
+              <div class="countdown-grid">
+                <div class="cd-box">
+                  <div id="cdDays" class="cd-num">0</div>
+                  <div class="cd-label">Hari</div>
+                </div>
+                <div class="cd-box">
+                  <div id="cdHours" class="cd-num">0</div>
+                  <div class="cd-label">Jam</div>
+                </div>
+                <div class="cd-box">
+                  <div id="cdMinutes" class="cd-num">0</div>
+                  <div class="cd-label">Menit</div>
+                </div>
+                <div class="cd-box">
+                  <div id="cdSeconds" class="cd-num">0</div>
+                  <div class="cd-label">Detik</div>
+                </div>
+              </div>
+
+              <p class="isi opacity-90 mt-4 text-center">
+                Mohon doa dan restunya ya 🙏
+              </p>
+            </div>
+
+            <div class="panel mt-6 reveal d3 quote-box text-center">
+              <div class="bismillah">
+                بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ
+              </div>
+              <p class="ayat">
+                “Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan
+                pasangan-pasangan untukmu dari jenismu sendiri, agar kamu
+                cenderung dan merasa tenteram kepadanya...”
+              </p>
+              <div class="ayat-ref">QS. Ar-Rum : 21</div>
+            </div>
+
+            <div class="panel mt-6 reveal d4 acara-box">
+              <h3 class="section-title text-center">Save The Date</h3>
+
+              <div class="mt-4 isi opacity-90 space-y-2">
+                <p class="flex gap-2 items-center justify-center">
+                  <i data-lucide="party-popper" class="lucide-icon"></i>
+                  <span class="panel-title" style="font-size: 1.45rem"
+                    >Ngunduh Mantu</span
+                  >
+                </p>
+
+                <p class="flex gap-2 items-center">
+                  <i data-lucide="calendar-days" class="lucide-icon"></i>
+                  <span>Minggu, 15 Februari 2026</span>
+                </p>
+
+                <p class="flex gap-2 items-center">
+                  <i data-lucide="clock-3" class="lucide-icon"></i>
+                  <span>09.00 WIB – Selesai</span>
+                </p>
+
+                <p class="flex gap-2 items-start">
+                  <i data-lucide="map-pin" class="lucide-icon mt-0.5"></i>
+                  <span>
+                    Jl. Sri Menanti, Ds. Tanjung Raja, Kec. Tanjung Raja,<br />
+                    Kab. Lampung Utara
+                  </span>
+                </p>
+              </div>
+
+              <div class="mt-5 flex flex-col gap-3">
+                <a href="#maps" class="btn-primary">
+                  <i data-lucide="navigation" class="lucide-icon"></i>
+                  <span>Buka Lokasi</span>
+                </a>
+
+                <button id="copyLink" class="btn-ghost" type="button">
+                  <i data-lucide="link" class="lucide-icon"></i>
+                  <span>Copy Link Undangan</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= CERITA (PAKAI BG MEMPELAI, POSISI KONSISTEN) ================= -->
+      <section
+        id="cerita"
+        class="story-section mempelaiBG"
+        aria-label="Perjalanan Kami">
+        <div class="story-inner">
+          <div class="card">
+            <h3 class="section-title">Perjalanan Kami</h3>
+            <p class="isi opacity-90 mt-2">
+              Cerita singkat perjalanan hingga hari bahagia.
+            </p>
+
+            <div class="mt-6 space-y-6">
+              <div class="story-row left">
+                <div class="story-photo">
+                  <img
+                    src="assets/heri.JPEG"
+                    alt="Momen pertama"
+                    class="story-img" />
+                </div>
+                <div class="bubble left-bubble bubbleMotion" data-stagger="1">
+                  <div class="bubble-top">
+                    <span class="bubble-name">Heri</span>
+                    <span class="bubble-time">Awal</span>
+                  </div>
+                  <p class="isi opacity-95">
+                    Tidak pernah menyangka, sebuah pertemuan sederhana bisa
+                    membawa kami sejauh ini.
+                  </p>
+                </div>
+              </div>
+
+              <div class="story-row right">
+                <div class="story-photo">
+                  <img
+                    src="assets/yolanda.JPEG"
+                    alt="Momen berdua"
+                    class="story-img" />
+                </div>
+                <div class="bubble right-bubble bubbleMotion" data-stagger="2">
+                  <div class="bubble-top">
+                    <span class="bubble-name">Yola</span>
+                    <span class="bubble-time">Berjalan</span>
+                  </div>
+                  <p class="isi opacity-95">
+                    Berawal dari saling mengenal, kami belajar memahami satu
+                    sama lain dan bertumbuh bersama.
+                  </p>
+                </div>
+              </div>
+
+              <div class="story-row left">
+                <div class="story-photo">
+                  <img
+                    src="assets/heri.JPEG"
+                    alt="Momen lamaran"
+                    class="story-img" />
+                </div>
+                <div class="bubble left-bubble bubbleMotion" data-stagger="3">
+                  <div class="bubble-top">
+                    <span class="bubble-name">Heri</span>
+                    <span class="bubble-time">Mantap</span>
+                  </div>
+                  <p class="isi opacity-95">
+                    Waktu mengajarkan arti komitmen. Kami memantapkan hati untuk
+                    melangkah bersama.
+                  </p>
+                </div>
+              </div>
+
+              <div class="story-row right">
+                <div class="story-photo">
+                  <img
+                    src="assets/yolanda.JPEG"
+                    alt="Menuju hari H"
+                    class="story-img" />
+                </div>
+                <div class="bubble right-bubble bubbleMotion" data-stagger="4">
+                  <div class="bubble-top">
+                    <span class="bubble-name">Yola</span>
+                    <span class="bubble-time">Hari Ini</span>
+                  </div>
+                  <p class="isi opacity-95">
+                    Dengan doa dan restu keluarga, kami siap memulai perjalanan
+                    baru. 🤍
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <p class="isi opacity-80 mt-6">
+              *Kamu bisa ganti teks + foto sesuai cerita asli. (story1–story4)
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= GALLERY (PAKAI BG MEMPELAI, POSISI KONSISTEN) ================= -->
+      <section
+        id="gallery"
+        class="gallery-section mempelaiBG"
+        aria-label="Album Foto">
+        <div class="gallery-inner">
+          <div class="gallery-head reveal">
+            <h3 class="section-title">Album Foto</h3>
+            <p class="isi opacity-90 mt-2">
+              Klik foto untuk melihat lebih besar.
+            </p>
+          </div>
+
+          <div class="gallery-grid-elegant mt-6" id="galleryGrid">
+            <button
+              class="g2-item reveal"
+              data-stagger="1"
+              data-full="assets/gallery1.JPG"
+              aria-label="Buka foto 1">
+              <img src="assets/gallery1.JPG" alt="Gallery 1" loading="lazy" />
+            </button>
+
+            <button
+              class="g2-item reveal"
+              data-stagger="2"
+              data-full="assets/gallery2.JPEG"
+              aria-label="Buka foto 2">
+              <img src="assets/gallery2.JPEG" alt="Gallery 2" loading="lazy" />
+            </button>
+
+            <button
+              class="g2-item reveal"
+              data-stagger="3"
+              data-full="assets/gallery3.JPEG"
+              aria-label="Buka foto 3">
+              <img src="assets/gallery3.JPEG" alt="Gallery 3" loading="lazy" />
+            </button>
+
+            <button
+              class="g2-item reveal"
+              data-stagger="4"
+              data-full="assets/gallery4.JPEG"
+              aria-label="Buka foto 4">
+              <img src="assets/gallery4.JPEG" alt="Gallery 4" loading="lazy" />
+            </button>
+
+            <button
+              class="g2-item reveal"
+              data-stagger="5"
+              data-full="assets/yolanda.JPEG"
+              aria-label="Buka foto 5">
+              <img src="assets/yolanda.JPEG" alt="Gallery 5" loading="lazy" />
+            </button>
+
+            <button
+              class="g2-item reveal"
+              data-stagger="6"
+              data-full="assets/heri.JPEG"
+              aria-label="Buka foto 6">
+              <img src="assets/heri.JPEG" alt="Gallery 6" loading="lazy" />
+            </button>
+          </div>
+        </div>
+
+        <!-- MODAL (tanpa blur) -->
+        <div
+          id="gModal"
+          class="gmodal hidden"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Preview Foto">
+          <button
+            id="gModalClose"
+            class="gmodal-close"
+            type="button"
+            aria-label="Tutup">
+            <i data-lucide="x" class="lucide-icon"></i>
+          </button>
+
+          <figure class="gmodal-figure">
+            <img id="gModalImg" src="" alt="Preview" class="gmodal-img" />
+            <figcaption id="gModalCap" class="gmodal-cap"></figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- MAPS (PAKAI BG MEMPELAI, POSISI KONSISTEN) -->
+      <section id="maps" class="content-section mempelaiBG" aria-label="Lokasi">
+        <div class="section-inner">
+          <div class="card reveal">
+            <h3 class="section-title">Lokasi</h3>
+            <p class="isi opacity-90 mt-2">
+              Silakan gunakan peta berikut untuk navigasi.
+            </p>
+
+            <div class="map-wrap mt-6">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3975.179346912115!2d104.6570021!3d-4.9096356!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e476100756d650b%3A0x4813e4d0e945362e!2sNely%20salon!5e0!3m2!1sid!2sid!4v1767104361792!5m2!1sid!2sid"
+                style="border: 0"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+
+            <div class="mt-5 flex flex-col sm:flex-row gap-3">
+              <a
+                href="https://maps.app.goo.gl/jhQqt9BiqiaHuPua9?g_st=aw"
+                target="_blank"
+                rel="noopener"
+                class="btn-primary">
+                <i data-lucide="route" class="lucide-icon"></i>
+                <span>Buka di Google Maps</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- UCAPAN (PAKAI BG MEMPELAI, POSISI KONSISTEN) -->
+      <section
+        id="ucapan"
+        class="content-section mempelaiBG"
+        aria-label="Ucapan & Doa">
+        <div class="section-inner">
+          <div class="card reveal">
+            <h3 class="section-title">Ucapan &amp; Doa</h3>
+            <p class="isi opacity-90 mt-2">Tulis ucapan untuk kami.</p>
+
+            <form id="wishForm" class="mt-6 grid gap-3">
+              <input id="wishName" class="input" placeholder="Nama" required />
+              <textarea
+                id="wishText"
+                class="input min-h-[110px]"
+                placeholder="Ucapan & Doa"
+                required></textarea>
+
+              <div class="flex flex-col sm:flex-row gap-3">
+                <select id="wishAttend" class="input">
+                  <option value="Hadir">✅ Hadir</option>
+                  <option value="Tidak Hadir">❌ Tidak Hadir</option>
+                </select>
+                <button class="btn-primary" type="submit">
+                  <i data-lucide="send" class="lucide-icon"></i>
+                  <span>Kirim Ucapan</span>
+                </button>
+              </div>
+            </form>
+
+            <div class="mt-6 space-y-3" id="wishList"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- GIFT (PAKAI BG MEMPELAI, POSISI KONSISTEN) -->
+      <section
+        id="gift"
+        class="content-section mempelaiBG"
+        aria-label="Kirim Hadiah">
+        <div class="section-inner">
+          <div class="card reveal">
+            <h3 class="section-title">Kirim Hadiah</h3>
+            <p class="isi opacity-90 mt-2">
+              Doa restu Anda adalah hadiah terindah. Bila berkenan:
+            </p>
+
+            <div
+              class="panel mt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <div class="flex items-center gap-3">
+                <span class="dana-badge" aria-hidden="true">
+                  <svg
+                    viewBox="0 0 64 64"
+                    class="dana-svg"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                      <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0" stop-color="#00AEEF" />
+                        <stop offset="1" stop-color="#0077C8" />
+                      </linearGradient>
+                    </defs>
+                    <rect
+                      x="4"
+                      y="4"
+                      width="56"
+                      height="56"
+                      rx="14"
+                      fill="url(#g)" />
+                    <path
+                      d="M20 34c0-7.2 5.8-13 13-13h11v7H33c-3.3 0-6 2.7-6 6s2.7 6 6 6h11v7H33c-7.2 0-13-5.8-13-13z"
+                      fill="#fff" />
+                  </svg>
+                </span>
+
+                <div>
+                  <p class="panel-title leading-tight">DANA</p>
+                  <p class="isi opacity-90">085709324981 a.n. Heri</p>
+                </div>
+              </div>
+
+              <button id="copyDana" class="btn-ghost" type="button">
+                <i data-lucide="copy" class="lucide-icon"></i>
+                <span>Copy</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FOOTER (BIARKAN BG FOOTER) -->
+      <footer
+        class="footer-section footer-full"
+        id="footer"
+        aria-label="Penutup">
+        <img
+          class="footer-bg"
+          src="assets/footer.jpg"
+          alt=""
+          aria-hidden="true" />
+
+        <div class="footer-overlay" aria-hidden="true"></div>
+
+        <div class="footer-inner">
+          <div class="footer-card reveal">
+            <p class="isi">
+              Merupakan kehormatan dan kebahagiaan bagi kami apabila
+              Bapak/Ibu/Saudara/i berkenan hadir.
+            </p>
+            <p class="title-names mt-3">Heri &amp; Yolanda</p>
+          </div>
+        </div>
+      </footer>
+
+      <!-- spacer kecil biar footer nggak mepet di beberapa device -->
+      <div aria-hidden="true" style="height: 1px"></div>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>

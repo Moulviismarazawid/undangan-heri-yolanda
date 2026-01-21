@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Undangan Digital</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- COVER -->
+    <main class="cover" id="cover">
+      <div class="cover-inner">
+        <h1 class="title">Undangan</h1>
+        <p class="subtitle">Klik tombol untuk membuka</p>
+
+        <button class="btn" id="btnOpen">Buka Undangan</button>
+      </div>
+    </main>
+
+    <!-- ISI UNDANGAN (awal hidden) -->
+    <section class="content" id="content" aria-hidden="true">
+      <!-- ini item-item yang akan "muncul dari kecil ke besar" satu per satu -->
+      <div class="card pop-item">
+        <img class="hero" src="assets/foto-1.jpg" alt="Foto pasangan" />
+      </div>
+
+      <div class="card pop-item">
+        <h2>Alya & Dimas</h2>
+        <p>
+          Dengan memohon rahmat Tuhan, kami mengundang Anda pada acara
+          pernikahan kami.
+        </p>
+      </div>
+
+      <div class="card pop-item">
+        <h3>Akad Nikah</h3>
+        <p>Minggu, 20 April 2026 • 09.00 WIB</p>
+        <p>Masjid Agung</p>
+      </div>
+
+      <div class="card pop-item">
+        <h3>Resepsi</h3>
+        <p>Minggu, 20 April 2026 • 11.00 WIB</p>
+        <p>Gedung Serbaguna</p>
+      </div>
+
+      <div class="card pop-item">
+        <h3>Lokasi</h3>
+        <a class="btn" href="#" target="_blank" rel="noreferrer"
+          >Buka Google Maps</a
+        >
+      </div>
+
+      <div class="card pop-item">
+        <h3>Galeri</h3>
+        <div class="grid">
+          <img src="assets/foto-2.jpg" alt="Galeri 1" />
+          <img src="assets/foto-3.jpg" alt="Galeri 2" />
+          <img src="assets/foto-4.jpg" alt="Galeri 3" />
+        </div>
+      </div>
+    </section>
+
+    <script src="app.js"></script>
+  </body>
+</html>
