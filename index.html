@@ -98,7 +98,6 @@
     <main id="content" class="content hidden">
       <div class="mobile-shell">
         <!-- HERO / MOTION (BG HERO BIARKAN) -->
-        <!-- HERO / MOTION -->
         <header class="w-full px-0 pt-0">
           <div class="card heroMotionWrap full-bleed">
             <section
@@ -111,6 +110,7 @@
                 <img src="assets/tree_red.png" alt="Pohon Merah" />
               </div>
 
+              <!-- frameLayer SETELAH tree red -->
               <div class="layer frameLayer intro">
                 <img src="assets/frame.png" alt="Frame" />
               </div>
@@ -131,6 +131,9 @@
                 <img src="assets/grass.png" alt="Grass" />
               </div>
 
+              <!-- overlay cream -->
+              <div class="heroTint" aria-hidden="true"></div>
+
               <div class="accent-maroon" aria-hidden="true"></div>
 
               <!-- TITLE CENTER -->
@@ -149,7 +152,7 @@
                   </div>
                 </div>
               </div>
-              <!-- ✅ TOMBOL DIPINDAH KE BAWAH SCENE -->
+
               <a
                 href="#acara"
                 class="heroCta heroCta--primary"
@@ -168,7 +171,7 @@
         </header>
       </div>
 
-      <!-- MEMPELAI (FULL BG: background mempelai) -->
+      <!-- MEMPELAI (warna font nanti kita atur di CSS khusus section ini) -->
       <section id="mempelai" class="mempelaiSection mempelaiBG">
         <div class="mempelaiInner container mx-auto px-4">
           <div class="card reveal d1">
@@ -201,7 +204,7 @@
         </div>
       </section>
 
-      <!-- ================= ACARA / COUNTDOWN (BG HERO BIARKAN, BG ACARA BIARKAN) ================= -->
+      <!-- ACARA (BG ACARA BIARKAN) -->
       <section id="acara" class="curtain-section" aria-label="Detail Acara">
         <div class="curtainVeil" aria-hidden="true"></div>
 
@@ -292,7 +295,7 @@
         </div>
       </section>
 
-      <!-- ================= CERITA (PAKAI BG MEMPELAI, POSISI KONSISTEN) ================= -->
+      <!-- CERITA (warna font nanti kita atur di CSS khusus section ini) -->
       <section
         id="cerita"
         class="story-section mempelaiBG"
@@ -389,7 +392,7 @@
         </div>
       </section>
 
-      <!-- ================= GALLERY (PAKAI BG MEMPELAI, POSISI KONSISTEN) ================= -->
+      <!-- GALLERY (warna font nanti kita atur di CSS khusus section ini) -->
       <section
         id="gallery"
         class="gallery-section mempelaiBG"
@@ -475,7 +478,7 @@
         </div>
       </section>
 
-      <!-- MAPS (PAKAI BG MEMPELAI, POSISI KONSISTEN) -->
+      <!-- MAPS (warna font nanti kita atur di CSS khusus section ini) -->
       <section id="maps" class="content-section mempelaiBG" aria-label="Lokasi">
         <div class="section-inner">
           <div class="card reveal">
@@ -507,7 +510,7 @@
         </div>
       </section>
 
-      <!-- UCAPAN (PAKAI BG MEMPELAI, POSISI KONSISTEN) -->
+      <!-- UCAPAN (warna font nanti kita atur di CSS khusus section ini) -->
       <section
         id="ucapan"
         class="content-section mempelaiBG"
@@ -542,7 +545,7 @@
         </div>
       </section>
 
-      <!-- GIFT (PAKAI BG MEMPELAI, POSISI KONSISTEN) -->
+      <!-- GIFT (warna font nanti kita atur di CSS khusus section ini) -->
       <section
         id="gift"
         class="content-section mempelaiBG"
@@ -554,6 +557,7 @@
               Doa restu Anda adalah hadiah terindah. Bila berkenan:
             </p>
 
+            <!-- DANA -->
             <div
               class="panel mt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div class="flex items-center gap-3">
@@ -592,6 +596,34 @@
                 <span>Copy</span>
               </button>
             </div>
+
+            <!-- MANDIRI (ditambah) -->
+            <div
+              class="panel mt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <div class="flex items-center gap-3">
+                <span
+                  class="dana-badge"
+                  aria-hidden="true"
+                  title="Bank Mandiri">
+                  <i data-lucide="landmark" class="lucide-icon"></i>
+                </span>
+
+                <div>
+                  <p class="panel-title leading-tight">MANDIRI</p>
+                  <!-- isi nomor & nama rekening kamu di sini -->
+                  <p class="isi opacity-90">0000000000000 a.n. Heri</p>
+                </div>
+              </div>
+
+              <button id="copyMandiri" class="btn-ghost" type="button">
+                <i data-lucide="copy" class="lucide-icon"></i>
+                <span>Copy</span>
+              </button>
+            </div>
+
+            <p class="isi opacity-80 mt-4">
+              *Ganti nomor rekening Mandiri di atas sesuai data asli.
+            </p>
           </div>
         </div>
       </section>
@@ -606,7 +638,6 @@
           src="assets/footer.jpg"
           alt=""
           aria-hidden="true" />
-
         <div class="footer-overlay" aria-hidden="true"></div>
 
         <div class="footer-inner">
