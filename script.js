@@ -1,3 +1,10 @@
+// =========================================================
+// script.js (FULL DARI AWAL — versi rapi + FIX)
+// - FIX gallery caption (assets -> img)
+// - Auto apply class angin ke layer hero (biar pasti gerak)
+// - Hero intro stagger + angin nyala setelahnya
+// =========================================================
+
 // Helpers
 const $ = (q) => document.querySelector(q);
 const $$ = (q) => Array.from(document.querySelectorAll(q));
@@ -57,6 +64,33 @@ function initMusicToggle() {
   if (!btn) return;
   btn.addEventListener("click", () => toggleMusic());
   setMusicIcon();
+}
+
+function initMusicAutoUnlock() {
+  const audio = $("#bgm");
+  if (!audio) return;
+
+  // coba autoplay (kadang bisa di desktop)
+  audio
+    .play()
+    .then(() => {
+      musicOn = true;
+      setMusicIcon();
+    })
+    .catch(() => {});
+
+  // fallback: sekali sentuh layar / scroll / klik -> play
+  const unlock = () => {
+    if (musicOn) return;
+    toggleMusic(true);
+    document.removeEventListener("click", unlock);
+    document.removeEventListener("touchstart", unlock);
+    document.removeEventListener("scroll", unlock);
+  };
+
+  document.addEventListener("click", unlock, { once: true });
+  document.addEventListener("touchstart", unlock, { once: true });
+  document.addEventListener("scroll", unlock, { once: true });
 }
 
 /* =========================
@@ -158,9 +192,9 @@ function initWishes() {
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
-    const name = $("#wishName").value.trim();
-    const text = $("#wishText").value.trim();
-    const attend = $("#wishAttend").value;
+    const name = $("#wishName")?.value.trim();
+    const text = $("#wishText")?.value.trim();
+    const attend = $("#wishAttend")?.value || "";
 
     if (!name || !text) return;
 
@@ -179,7 +213,7 @@ function initWishes() {
 }
 
 /* =========================
-   COPY + TOAST
+   TOAST + COPY
 ========================= */
 let toastTimer = null;
 
@@ -256,8 +290,30 @@ function initCurtain() {
 }
 
 /* =========================
+   HERO: AUTO APPLY "ANGIN"
+   ✅ supaya gak perlu nambah class manual di HTML
+========================= */
+function applyWindClasses(root) {
+  if (!root) return;
+
+  // Kamu bisa ubah mapping ini sesukamu.
+  // Intinya: kasih class sway/float ke layer yang mau gerak.
+  const map = [
+    [".treeLayer", "sway3"],
+    [".grassLayer", "sway"],
+    [".branchLayer", "sway2"],
+    [".colorfulLayer", "float"],
+    [".brownLayer", "float2"],
+  ];
+
+  map.forEach(([sel, cls]) => {
+    const el = root.querySelector(sel);
+    if (el) el.classList.add(cls);
+  });
+}
+
+/* =========================
    HERO INTRO (ASSET SATU-SATU)
-   ✅ dibuat lebih smooth (stagger + easing)
 ========================= */
 function resetIntro() {
   const root = document.querySelector("#heroScene");
@@ -275,39 +331,39 @@ async function runIntro() {
   const root = document.querySelector("#heroScene");
   if (!root) return;
 
+  // pastikan class angin sudah ke-apply
+  applyWindClasses(root);
+
+  // urutan tampil
   const order = [
     ".treeLayer",
     ".frameLayer",
-    ".branchLayer",
-    ".brownLayer",
-    ".colorfulLayer",
     ".grassLayer",
+    ".colorfulLayer",
+    ".brownLayer",
+    ".branchLayer",
   ];
 
-  // 1) Asset muncul satu-satu (lebih smooth)
   for (let i = 0; i < order.length; i++) {
-    const sel = order[i];
-    const el = root.querySelector(sel);
+    const el = root.querySelector(order[i]);
     if (!el) continue;
-
     el.classList.add("show");
-    // stagger halus (sedikit melambat)
-    await wait(220 + i * 18);
+    await wait(220);
   }
 
-  // 2) Accent muncul
-  await wait(220);
+  await wait(200);
   root.querySelector(".accent-maroon")?.classList.add("show");
 
-  // 3) Nama muncul terakhir
   await wait(260);
   root.querySelector(".introText")?.classList.add("show");
 
-  // 4) Baru angin jalan
-  await wait(320);
+  // ✅ angin hidup
+  await wait(260);
   root
     .querySelectorAll(".sway, .sway2, .sway3, .float, .float2")
-    .forEach((el) => el.classList.add("live"));
+    .forEach((el) => {
+      el.classList.add("live");
+    });
 }
 
 /* =========================
@@ -324,26 +380,17 @@ function initOpening() {
   if (!openBtn || !opening || !content) return;
 
   openBtn.addEventListener("click", () => {
-    // show content
     content.classList.remove("hidden");
-
-    // animate opening out
     opening.classList.add("hide");
 
-    // start music after user gesture
     toggleMusic(true);
-
-    // icons refresh
     initLucide();
 
-    // run hero intro
     resetIntro();
     setTimeout(() => runIntro(), 260);
 
-    // scroll to top of main content
     window.scrollTo({ top: 0, behavior: "smooth" });
 
-    // after animation, remove opening
     setTimeout(() => {
       opening.style.display = "none";
     }, 720);
@@ -377,7 +424,8 @@ function initStoryBubbles() {
 }
 
 /* =========================
-   GALLERY: reveal stagger + modal (tanpa blur)
+   GALLERY: reveal stagger + modal
+   ✅ FIX caption (img selector)
 ========================= */
 function initGallery() {
   const grid = document.getElementById("galleryGrid");
@@ -388,7 +436,7 @@ function initGallery() {
 
   if (!grid || !modal || !modalImg) return;
 
-  // ---- REVEAL STAGGER ----
+  // reveal stagger
   const items = grid.querySelectorAll(".g2-item.reveal");
   const io = new IntersectionObserver(
     (entries) => {
@@ -405,28 +453,26 @@ function initGallery() {
   );
   items.forEach((el) => io.observe(el));
 
-  // ---- MODAL OPEN ----
   function openModal(src, caption) {
     modalImg.onerror = () => {
       modalImg.removeAttribute("src");
-      modalCap.textContent = "Gambar tidak ditemukan: " + src;
+      if (modalCap) modalCap.textContent = "Gambar tidak ditemukan: " + src;
     };
 
     modalImg.src = src;
-    modalCap.textContent = caption || "";
+    if (modalCap) modalCap.textContent = caption || "";
     modal.classList.remove("hidden");
     requestAnimationFrame(() => modal.classList.add("open"));
     document.body.style.overflow = "hidden";
   }
 
-  // ---- MODAL CLOSE ----
   function closeModal() {
     modal.classList.remove("open");
     document.body.style.overflow = "";
     setTimeout(() => {
       modal.classList.add("hidden");
       modalImg.src = "";
-      modalCap.textContent = "";
+      if (modalCap) modalCap.textContent = "";
     }, 260);
   }
 
@@ -435,14 +481,12 @@ function initGallery() {
     if (!btn) return;
 
     const full = btn.getAttribute("data-full");
-    const img = btn.querySelector("assets");
-    const caption = img ? img.alt : "";
+    const img = btn.querySelector("img"); // ✅ FIX: sebelumnya "assets"
+    const caption = img?.alt || "";
 
     if (!full) return;
 
-    // ✅ bikin jadi absolute URL biar gak salah folder
     const resolved = new URL(full, document.baseURI).href;
-
     openModal(resolved, caption);
   });
 
@@ -457,32 +501,6 @@ function initGallery() {
   window.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && !modal.classList.contains("hidden")) closeModal();
   });
-}
-function initMusicAutoUnlock() {
-  const audio = $("#bgm");
-  if (!audio) return;
-
-  // coba autoplay (kadang bisa di desktop)
-  audio
-    .play()
-    .then(() => {
-      musicOn = true;
-      setMusicIcon();
-    })
-    .catch(() => {});
-
-  // fallback: sekali sentuh layar / scroll / klik -> langsung play
-  const unlock = () => {
-    if (musicOn) return;
-    toggleMusic(true);
-    document.removeEventListener("click", unlock);
-    document.removeEventListener("touchstart", unlock);
-    document.removeEventListener("scroll", unlock);
-  };
-
-  document.addEventListener("click", unlock, { once: true });
-  document.addEventListener("touchstart", unlock, { once: true });
-  document.addEventListener("scroll", unlock, { once: true });
 }
 
 /* =========================
@@ -501,6 +519,6 @@ document.addEventListener("DOMContentLoaded", () => {
   initStoryBubbles();
   initGallery();
 
-  // render icons once more (aman)
+  // icons refresh (aman)
   initLucide();
 });
