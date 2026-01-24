@@ -88,6 +88,14 @@ body {
   width: 18px;
   height: 18px;
 }
+.cover-hashtag {
+  margin-top: 14px;
+  letter-spacing: 0.14em;
+  font-weight: 800;
+  font-size: clamp(0.82rem, 2.8vw, 1rem);
+  color: var(--gold);
+  text-shadow: 0 14px 40px rgba(0, 0, 0, 0.55);
+}
 
 /* =========================
    BACKGROUND ANIMATED + GRAIN
@@ -180,14 +188,22 @@ body {
 .opening-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(34, 15, 12, 0) 0%,
-    rgba(34, 15, 12, 0.1) 45%,
-    rgba(34, 15, 12, 0.55) 70%,
-    rgba(34, 15, 12, 0.92) 100%
-  );
   pointer-events: none;
+
+  /* lebih ringan, foto tetap kelihatan */
+  background:
+    radial-gradient(
+      120% 60% at 50% 42%,
+      rgba(0, 0, 0, 0.22),
+      rgba(0, 0, 0, 0.48)
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(34, 15, 12, 0.06) 0%,
+      rgba(34, 15, 12, 0.18) 40%,
+      rgba(34, 15, 12, 0.55) 78%,
+      rgba(34, 15, 12, 0.72) 100%
+    );
 }
 
 .opening-text {
@@ -221,7 +237,7 @@ body {
   font-size: clamp(3.2rem, 15vw, 6.6rem);
   line-height: 1.03;
   letter-spacing: 0.03em;
-  text-shadow: 0 18px 55px rgba(0, 0, 0, 0.55);
+  text-shadow: 0 18px 55px rgba(42, 36, 36, 0.55);
 }
 .cover-amp {
   display: inline-block;
@@ -229,25 +245,25 @@ body {
   font-size: clamp(1.55rem, 6.4vw, 2.2rem);
   opacity: 0.95;
 }
-.cover-sub {
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  font-size: clamp(0.74rem, 2.6vw, 0.92rem);
-  color: var(--text-dim);
-  margin-top: 12px;
+.cover-sub,
+.cover-date,
+.cover-address {
+  color: rgba(255, 255, 255, 0.96);
+  text-shadow:
+    0 1px 4px rgba(0, 0, 0, 0.55),
+    0 10px 26px rgba(0, 0, 0, 0.28);
 }
+
 .cover-date {
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  font-weight: 700;
-  font-size: clamp(0.78rem, 2.8vw, 1.02rem);
-  margin-top: 14px;
+  font-weight: 800;
+  letter-spacing: 0.24em;
 }
+
 .cover-address {
   letter-spacing: 0.14em;
   text-transform: uppercase;
   font-size: clamp(0.68rem, 2.4vw, 0.9rem);
-  color: var(--text-dimmer);
+  color: rgba(255, 255, 255, 0.86); /* jangan var(--text-dimmer) */
   margin-top: 12px;
   line-height: 1.55;
 }
@@ -263,16 +279,22 @@ body {
   box-shadow: 0 14px 40px rgba(0, 0, 0, 0.25);
 }
 .to-label {
-  letter-spacing: 0.18em;
+  font-family: "Alice", serif;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  font-size: 0.72rem;
-  opacity: 0.82;
+  font-size: 0.7rem;
+  opacity: 0.7;
 }
+
 .to-name {
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  margin-top: 5px;
-  font-size: 1.14rem;
+  font-family: "Alice", serif;
+  font-weight: 400; /* selaras dengan nama mempelai */
+  letter-spacing: 0.08em;
+  margin-top: 6px;
+  font-size: clamp(1.15rem, 4.2vw, 1.35rem);
+  text-transform: uppercase;
+  color: var(--text);
+  text-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
 }
 
 .btn-open {
@@ -721,6 +743,7 @@ body {
 }
 
 /* CTA */
+/* CTA Hero: tetap nempel di bawah + isi sejajar (nggak numpuk) */
 #heroScene .heroCta {
   position: absolute;
   left: 50%;
@@ -728,6 +751,33 @@ body {
   transform: translateX(-50%);
   z-index: 80;
   pointer-events: auto;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  width: min(420px, calc(100% - 28px));
+  padding: 12px 16px;
+
+  white-space: nowrap;
+  border-radius: 999px;
+  text-decoration: none;
+}
+
+/* ikon kiri & kanan stabil */
+#heroScene .heroCtaIcon,
+#heroScene .heroCtaArrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+
+/* teks ambil ruang sisa */
+#heroScene .heroCtaText {
+  display: inline-block;
+  flex: 0 1 auto;
 }
 
 /* =========================
