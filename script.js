@@ -522,3 +522,21 @@ document.addEventListener("DOMContentLoaded", () => {
   // icons refresh (aman)
   initLucide();
 });
+function getGuestName() {
+  const params = new URLSearchParams(window.location.search);
+  const raw = params.get("to");
+  if (!raw) return "Tamu Undangan";
+
+  try {
+    // biar "Keluarga+Bapak+Andi" jadi spasi, lalu decode
+    const cleaned = raw.replace(/\+/g, " ");
+    const name = decodeURIComponent(cleaned).trim();
+    return name || "Tamu Undangan";
+  } catch {
+    return raw.replace(/\+/g, " ").trim() || "Tamu Undangan";
+  }
+}
+
+// set ke tulisan cover
+const guestEl = document.getElementById("guestName");
+if (guestEl) guestEl.textContent = getGuestName();
