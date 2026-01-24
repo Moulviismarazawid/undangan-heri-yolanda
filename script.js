@@ -163,53 +163,82 @@ function escapeHtml(str) {
     .replaceAll("'", "&#039;");
 }
 
+/* =========================
+   WISHES (FIRESTORE - REALTIME)
+========================= */
 function initWishes() {
-  const form = $("#wishForm");
-  const list = $("#wishList");
-  if (!form || !list) return;
+  const form = document.getElementById("wishForm");
+  const list = document.getElementById("wishList");
+  if (!form || !list || !window.__FIREBASE__) return;
 
-  const storeKey = "wishes_local_v1";
+  const {
+    db,
+    collection,
+    addDoc,
+    serverTimestamp,
+    query,
+    orderBy,
+    limit,
+    onSnapshot,
+  } = window.__FIREBASE__;
 
-  function render() {
-    const data = JSON.parse(localStorage.getItem(storeKey) || "[]");
-    list.innerHTML = data
-      .map(
-        (item) => `
+  const weddingId = "heri-yola"; // bebas, asal konsisten
+  const wishesRef = collection(db, "weddings", weddingId, "wishes");
+
+  function render(item) {
+    return `
       <div class="panel">
         <div class="flex items-center justify-between gap-3">
           <div>
-            <div class="panel-title">${escapeHtml(item.name)}</div>
-            <div class="isi opacity-80">${escapeHtml(item.attend)}</div>
+            <div class="panel-title">${escapeHtml(item.name || "")}</div>
+            <div class="isi opacity-80">${escapeHtml(item.attend || "")}</div>
           </div>
-          <div class="isi opacity-70">${escapeHtml(item.time)}</div>
+          <div class="isi opacity-70">${escapeHtml(item.time || "")}</div>
         </div>
-        <p class="isi opacity-90 mt-2">${escapeHtml(item.text)}</p>
+        <p class="isi opacity-90 mt-2">${escapeHtml(item.text || "")}</p>
       </div>
-    `,
-      )
-      .join("");
+    `;
   }
 
-  form.addEventListener("submit", (e) => {
+  // 🔥 realtime listener
+  const q = query(wishesRef, orderBy("createdAt", "desc"), limit(50));
+  onSnapshot(q, (snap) => {
+    const rows = [];
+    snap.forEach((doc) => rows.push(doc.data()));
+    list.innerHTML = rows.map(render).join("");
+  });
+
+  // submit
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const name = $("#wishName")?.value.trim();
-    const text = $("#wishText")?.value.trim();
-    const attend = $("#wishAttend")?.value || "";
+
+    const name = document.getElementById("wishName").value.trim();
+    const text = document.getElementById("wishText").value.trim();
+    const attend = document.getElementById("wishAttend").value;
 
     if (!name || !text) return;
 
     const now = new Date();
-    const time = `${pad2(now.getDate())}/${pad2(now.getMonth() + 1)}/${now.getFullYear()} ${pad2(now.getHours())}:${pad2(now.getMinutes())}`;
+    const time =
+      `${pad2(now.getDate())}/${pad2(now.getMonth() + 1)}/${now.getFullYear()} ` +
+      `${pad2(now.getHours())}:${pad2(now.getMinutes())}`;
 
-    const data = JSON.parse(localStorage.getItem(storeKey) || "[]");
-    data.unshift({ name, text, attend, time });
-    localStorage.setItem(storeKey, JSON.stringify(data));
+    try {
+      await addDoc(wishesRef, {
+        name,
+        text,
+        attend,
+        time,
+        createdAt: serverTimestamp(),
+      });
 
-    form.reset();
-    render();
+      form.reset();
+      toast("Ucapan terkirim ✅");
+    } catch (err) {
+      console.error(err);
+      toast("Gagal kirim ucapan ❌");
+    }
   });
-
-  render();
 }
 
 /* =========================
@@ -522,3 +551,16 @@ document.addEventListener("DOMContentLoaded", () => {
   // icons refresh (aman)
   initLucide();
 });
+
+const copyMandiri = $("#copyMandiri");
+
+if (copyMandiri) {
+  copyMandiri.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText("1140028795741");
+      toast("Rekening Mandiri tersalin ✅");
+    } catch {
+      toast("Gagal copy. Tekan & tahan untuk salin.");
+    }
+  });
+}
